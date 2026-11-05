@@ -1,0 +1,8 @@
+*
+!pyproject.toml
+!uv.lock
+!.python-version
+!rater/
+!rates/
+!app/
+**/__pycache__

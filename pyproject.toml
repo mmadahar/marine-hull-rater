@@ -3,7 +3,10 @@ name = "marine-hull-rater"
 version = "1.0.0"
 description = "Illustrative marine hull rating logic. All rates are invented."
 requires-python = ">=3.14,<3.15"
-dependencies = []
+dependencies = [
+    "fastapi>=0.162.0",
+    "uvicorn>=0.54.0",
+]
 
 [tool.uv]
 package = false
@@ -14,5 +17,6 @@ pythonpath = ["."]
 
 [dependency-groups]
 dev = [
+    "httpx2>=2.16.0",
     "pytest>=9.2.0",
 ]
