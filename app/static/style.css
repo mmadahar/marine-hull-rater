@@ -1,0 +1,300 @@
+:root {
+  --primary: #054f9c;
+  --primary-light: #337dc0;
+  --primary-dark: #23398b;
+  --accent: #e75125;
+  --text: #000000;
+  --text-strong: #001c49;
+  --on-primary: #ffffff;
+  --surface: #ffffff;
+  --surface-alt: #eef1f6;
+  --gradient: linear-gradient(90deg, #337dc0 0%, #23398b 100%);
+  --font-heading: "Bebas Neue", Arial, sans-serif;
+  --font-body: "Montserrat", Arial, sans-serif;
+}
+
+@font-face {
+  font-family: "Bebas Neue";
+  src: url("fonts/BebasNeue-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Montserrat";
+  src: url("fonts/Montserrat-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Montserrat";
+  src: url("fonts/Montserrat-SemiBold.woff2") format("woff2");
+  font-weight: 600;
+  font-display: swap;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+body {
+  margin: 0;
+  background: var(--surface);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+h1, h2, h3 {
+  margin: 0;
+  color: var(--text-strong);
+  font-family: var(--font-heading);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  line-height: 1.1;
+}
+
+h2 {
+  font-size: 1.75rem;
+  margin-bottom: 1rem;
+}
+
+h3 {
+  font-size: 1.5rem;
+  margin: 2rem 0 0.75rem;
+}
+
+a {
+  color: var(--primary);
+}
+
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.site-header {
+  background: var(--primary-dark);
+  border-bottom: 6px solid transparent;
+  border-image: var(--gradient) 1;
+  padding: 1rem 16px;
+}
+
+.site-header h1 {
+  max-width: calc(60rem - 32px);
+  margin: 0 auto;
+  color: var(--on-primary);
+  font-size: 2.25rem;
+}
+
+main {
+  max-width: 60rem;
+  margin: 0 auto;
+  padding: 1.5rem 16px 2rem;
+}
+
+section {
+  margin-top: 2rem;
+}
+
+section:focus {
+  outline: none;
+}
+
+.notice {
+  margin: 0;
+  padding: 0.75rem 1rem;
+  background: var(--surface-alt);
+  border-left: 6px solid var(--accent);
+}
+
+.status {
+  margin: 0 0 1rem;
+}
+
+.alert {
+  margin-bottom: 1rem;
+  padding: 0.75rem 1rem;
+  background: var(--surface);
+  border: 2px solid var(--accent);
+  font-weight: 600;
+}
+
+.fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+  gap: 1rem 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.25rem;
+  color: var(--text-strong);
+  font-weight: 600;
+}
+
+input, select {
+  width: 100%;
+  min-height: 2.75rem;
+  padding: 0.5rem 0.75rem;
+  background: var(--surface);
+  border: 1px solid var(--text-strong);
+  border-radius: 2px;
+  color: var(--text);
+  font: inherit;
+}
+
+input[aria-invalid="true"], select[aria-invalid="true"] {
+  border: 2px solid var(--accent);
+}
+
+.hint {
+  margin: 0.25rem 0 0;
+  font-size: 0.875rem;
+}
+
+.field-error {
+  margin: 0.25rem 0 0;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.field-error::before {
+  content: "\26A0\00A0";
+  color: var(--accent);
+}
+
+button {
+  min-height: 2.75rem;
+  padding: 0.5rem 1.5rem;
+  background: var(--primary);
+  border: 0;
+  border-radius: 2px;
+  color: var(--on-primary);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:hover {
+  background: var(--primary-dark);
+}
+
+button:disabled {
+  background: var(--surface-alt);
+  color: var(--text-strong);
+  cursor: progress;
+}
+
+.premium {
+  padding: 1.25rem 1.5rem;
+  background: var(--primary-dark);
+  color: var(--on-primary);
+}
+
+.premium h2 {
+  margin: 0;
+  color: var(--on-primary);
+}
+
+.premium-value {
+  margin: 0.25rem 0 0;
+  font-family: var(--font-heading);
+  font-size: clamp(2.5rem, 12vw, 4rem);
+  letter-spacing: 0.02em;
+  line-height: 1.1;
+  overflow-wrap: anywhere;
+}
+
+.table-scroll {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9375rem;
+}
+
+th, td {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--surface-alt);
+  text-align: left;
+}
+
+thead th {
+  background: var(--surface-alt);
+  color: var(--text-strong);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.details {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+  gap: 1rem 1.5rem;
+  margin: 0;
+}
+
+dt {
+  color: var(--text-strong);
+  font-weight: 600;
+}
+
+dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.code {
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+  font-size: 0.875rem;
+}
+
+/* Five columns do not fit a phone, so each factor becomes its own block. */
+@media (max-width: 40rem) {
+  thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+
+  tr {
+    display: block;
+    padding: 0.5rem 0;
+    border-bottom: 2px solid var(--surface-alt);
+  }
+
+  td {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.125rem 0;
+    border: 0;
+    text-align: right;
+    white-space: normal;
+  }
+
+  td::before {
+    content: attr(data-label);
+    color: var(--text-strong);
+    font-weight: 600;
+    text-align: left;
+  }
+}

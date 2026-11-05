@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Marine hull rater</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <h1>Marine hull rater</h1>
+  </header>
+
+  <main>
+    <p class="notice"><strong>Demo only.</strong> All rates are made up. This is not a real quote.</p>
+
+    <section aria-labelledby="vessel-heading">
+      <h2 id="vessel-heading">Vessel details</h2>
+      <p id="form-status" class="status" role="status">Loading the form. This can take several seconds if the app has been idle.</p>
+      <div id="form-error" class="alert" role="alert" hidden></div>
+      <form id="quote-form" hidden>
+        <div id="fields" class="fields"></div>
+        <button id="submit" type="submit">Get quote</button>
+      </form>
+    </section>
+
+    <section id="result" aria-labelledby="premium-heading" tabindex="-1" hidden>
+      <div class="premium">
+        <h2 id="premium-heading">Technical premium</h2>
+        <p id="premium" class="premium-value"></p>
+      </div>
+
+      <h3>Rating factors</h3>
+      <div class="table-scroll" tabindex="0" role="region" aria-label="Rating factors">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Factor</th>
+              <th scope="col">Value</th>
+              <th scope="col" class="num">Multiplier</th>
+              <th scope="col" class="num">Effect</th>
+              <th scope="col" class="num">Premium after</th>
+            </tr>
+          </thead>
+          <tbody id="factor-rows"></tbody>
+        </table>
+      </div>
+
+      <h3>Quote details</h3>
+      <dl class="details">
+        <div><dt>Base premium</dt><dd id="base-premium"></dd></div>
+        <div><dt>Rate per gross tonne</dt><dd id="rate-tonne"></dd></div>
+        <div><dt>Rate on hull value</dt><dd id="rate-value"></dd></div>
+        <div><dt>Model version</dt><dd id="model-version"></dd></div>
+        <div><dt>Git commit</dt><dd id="git-commit" class="code"></dd></div>
+        <div><dt>Quote ID</dt><dd id="quote-id" class="code"></dd></div>
+      </dl>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
