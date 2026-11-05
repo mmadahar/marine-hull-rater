@@ -1,0 +1,172 @@
+# Fixed test quotes. Expected values are literals, worked out by separate
+# arithmetic that does not use the rater. Do not regenerate them from its output.
+
+[[quotes]]
+name = "modern_bulker"
+expected_base_premium = "91000.00"
+expected_premium = "72535.01"
+expected_rate_per_gross_tonne = "2.42"
+expected_rate_on_hull_value_pct = "0.259"
+[quotes.inputs]
+vessel_type = "bulk_carrier"
+gross_tonnage = 30000
+vessel_age = 3
+flag_tier = "tier_1"
+iacs_class = "yes"
+trading_area = "worldwide"
+deductible = 150000
+claims_count_5yr = 0
+agreed_hull_value = 28000000
+
+[[quotes]]
+name = "mid_life_bulker_low_value"
+expected_base_premium = "91000.00"
+expected_premium = "97843.20"
+expected_rate_per_gross_tonne = "3.26"
+expected_rate_on_hull_value_pct = "1.087"
+[quotes.inputs]
+vessel_type = "bulk_carrier"
+gross_tonnage = 30000
+vessel_age = 18
+flag_tier = "tier_2"
+iacs_class = "yes"
+trading_area = "worldwide"
+deductible = 150000
+claims_count_5yr = 1
+agreed_hull_value = 9000000
+
+[[quotes]]
+name = "large_tanker"
+expected_base_premium = "195000.00"
+expected_premium = "147829.50"
+expected_rate_per_gross_tonne = "1.85"
+expected_rate_on_hull_value_pct = "0.246"
+[quotes.inputs]
+vessel_type = "tanker"
+gross_tonnage = 80000
+vessel_age = 8
+flag_tier = "tier_1"
+iacs_class = "yes"
+trading_area = "worldwide"
+deductible = 500000
+claims_count_5yr = 0
+agreed_hull_value = 60000000
+
+[[quotes]]
+name = "mid_size_container_ship"
+expected_base_premium = "140500.00"
+expected_premium = "129260.00"
+expected_rate_per_gross_tonne = "2.59"
+expected_rate_on_hull_value_pct = "0.369"
+[quotes.inputs]
+vessel_type = "container_ship"
+gross_tonnage = 50000
+vessel_age = 12
+flag_tier = "tier_2"
+iacs_class = "yes"
+trading_area = "worldwide"
+deductible = 250000
+claims_count_5yr = 1
+agreed_hull_value = 35000000
+
+[[quotes]]
+name = "old_unclassed_coaster"
+expected_base_premium = "27000.00"
+expected_premium = "57220.02"
+expected_rate_per_gross_tonne = "19.07"
+expected_rate_on_hull_value_pct = "1.907"
+[quotes.inputs]
+vessel_type = "general_cargo"
+gross_tonnage = 3000
+vessel_age = 22
+flag_tier = "tier_3"
+iacs_class = "no"
+trading_area = "regional"
+deductible = 100000
+claims_count_5yr = 2
+agreed_hull_value = 3000000
+
+[[quotes]]
+name = "regional_ro_ro"
+expected_base_premium = "80000.00"
+expected_premium = "63102.80"
+expected_rate_per_gross_tonne = "5.26"
+expected_rate_on_hull_value_pct = "0.287"
+[quotes.inputs]
+vessel_type = "ro_ro"
+gross_tonnage = 12000
+vessel_age = 6
+flag_tier = "tier_1"
+iacs_class = "yes"
+trading_area = "regional"
+deductible = 250000
+claims_count_5yr = 0
+agreed_hull_value = 22000000
+
+[[quotes]]
+name = "new_small_bulker_age_zero"
+expected_base_premium = "24000.00"
+expected_premium = "17829.60"
+expected_rate_per_gross_tonne = "4.46"
+expected_rate_on_hull_value_pct = "0.357"
+[quotes.inputs]
+vessel_type = "bulk_carrier"
+gross_tonnage = 4000
+vessel_age = 0
+flag_tier = "tier_2"
+iacs_class = "yes"
+trading_area = "sheltered_coastal"
+deductible = 100000
+claims_count_5yr = 0
+agreed_hull_value = 5000000
+
+[[quotes]]
+name = "tanker_on_band_edges"
+expected_base_premium = "35000.00"
+expected_premium = "44100.00"
+expected_rate_per_gross_tonne = "8.82"
+expected_rate_on_hull_value_pct = "0.551"
+[quotes.inputs]
+vessel_type = "tanker"
+gross_tonnage = 5000
+vessel_age = 15
+flag_tier = "tier_2"
+iacs_class = "yes"
+trading_area = "seasonal_high_latitude"
+deductible = 1000000
+claims_count_5yr = 3
+agreed_hull_value = 8000000
+
+[[quotes]]
+name = "very_large_container_ship"
+expected_base_premium = "267500.00"
+expected_premium = "166578.94"
+expected_rate_per_gross_tonne = "1.11"
+expected_rate_on_hull_value_pct = "0.151"
+[quotes.inputs]
+vessel_type = "container_ship"
+gross_tonnage = 150000
+vessel_age = 1
+flag_tier = "tier_1"
+iacs_class = "yes"
+trading_area = "worldwide"
+deductible = 1000000
+claims_count_5yr = 0
+agreed_hull_value = 110000000
+
+[[quotes]]
+name = "old_general_cargo"
+expected_base_premium = "60000.00"
+expected_premium = "110437.50"
+expected_rate_per_gross_tonne = "13.80"
+expected_rate_on_hull_value_pct = "1.841"
+[quotes.inputs]
+vessel_type = "general_cargo"
+gross_tonnage = 8000
+vessel_age = 27
+flag_tier = "tier_2"
+iacs_class = "yes"
+trading_area = "regional"
+deductible = 100000
+claims_count_5yr = 3
+agreed_hull_value = 6000000

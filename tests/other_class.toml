@@ -1,0 +1,39 @@
+# A made-up non-marine class: proves the engine needs only a different rates file.
+[model]
+name = "Illustrative warehouse rater"
+version = "warehouse-0.1.0"
+currency = "USD"
+
+[inputs.floor_area]
+label = "Floor area"
+type = "number"
+min = 1
+max = 100000
+
+[inputs.construction]
+label = "Construction"
+type = "choice"
+options = ["brick", "timber"]
+
+[inputs.sum_insured]
+label = "Sum insured"
+type = "number"
+min = 1
+max = 100000000
+
+[base]
+exposure_input = "floor_area"
+exposure_unit = "square metre"
+segment_input = "construction"
+band_from = [0, 1000]
+
+[base.rates_per_unit]
+brick = [2.00, 1.00]
+timber = [4.00, 2.00]
+
+[[factors]]
+input = "floor_area"
+bands = [{ from = 0, factor = 1.00 }, { from = 5000, factor = 0.90 }]
+
+[sense_check]
+value_input = "sum_insured"

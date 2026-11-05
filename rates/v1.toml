@@ -1,0 +1,123 @@
+# Marine hull rates, version 1. EVERY NUMBER HERE IS INVENTED FOR A DEMO.
+# None of it comes from a real tariff, and it must not be used to price real risks.
+
+[model]
+name = "Illustrative marine hull rater"
+version = "marine-hull-1.0.0"
+currency = "USD"
+
+# ---- Inputs: what a quote needs, and what values are valid ----
+
+[inputs.vessel_type]
+label = "Vessel type"
+type = "choice"
+options = ["bulk_carrier", "tanker", "container_ship", "general_cargo", "ro_ro"]
+
+[inputs.gross_tonnage]
+label = "Gross tonnage"
+type = "number"
+min = 100
+max = 300000
+
+[inputs.vessel_age]
+label = "Vessel age (years)"
+type = "integer"
+min = 0
+max = 50
+
+[inputs.flag_tier]
+label = "Flag tier"
+type = "choice"
+options = ["tier_1", "tier_2", "tier_3"]
+
+[inputs.iacs_class]
+label = "IACS class member"
+type = "choice"
+options = ["yes", "no"]
+
+[inputs.trading_area]
+label = "Trading area"
+type = "choice"
+options = ["sheltered_coastal", "regional", "worldwide", "seasonal_high_latitude"]
+
+[inputs.deductible]
+label = "Deductible (USD)"
+type = "number"
+min = 100000
+max = 5000000
+
+[inputs.claims_count_5yr]
+label = "Claims in the last five years"
+type = "integer"
+min = 0
+max = 50
+
+[inputs.agreed_hull_value]
+label = "Agreed hull value (USD)"
+type = "number"
+min = 100000
+max = 500000000
+
+# ---- Base premium: each slice of tonnage is charged at its own band's rate ----
+
+[base]
+exposure_input = "gross_tonnage"
+exposure_unit = "gross tonne"
+segment_input = "vessel_type"
+band_from = [0, 5000, 20000, 60000]
+
+[base.rates_per_unit]  # USD per gross tonne, one rate per band above
+bulk_carrier = [6.00, 3.00, 1.60, 1.00]
+tanker = [7.00, 3.60, 2.00, 1.30]
+container_ship = [6.50, 3.40, 1.90, 1.20]
+general_cargo = [9.00, 5.00, 2.80, 1.80]
+ro_ro = [9.00, 5.00, 2.80, 1.70]
+
+# ---- Multipliers, applied to the base premium in this order ----
+
+[[factors]]
+input = "vessel_age"
+bands = [
+  { from = 0, factor = 0.92 },
+  { from = 5, factor = 1.00 },
+  { from = 15, factor = 1.12 },
+  { from = 20, factor = 1.30 },
+  { from = 25, factor = 1.55 },
+]
+
+[[factors]]
+input = "flag_tier"
+table = { tier_1 = 0.95, tier_2 = 1.00, tier_3 = 1.20 }
+
+[[factors]]
+input = "iacs_class"
+table = { yes = 1.00, no = 1.30 }
+
+[[factors]]
+input = "trading_area"
+table = { sheltered_coastal = 0.85, regional = 0.95, worldwide = 1.00, seasonal_high_latitude = 1.20 }
+
+[[factors]]
+input = "deductible"
+bands = [
+  { from = 100000, factor = 1.00 },
+  { from = 150000, factor = 0.96 },
+  { from = 250000, factor = 0.92 },
+  { from = 500000, factor = 0.84 },
+  { from = 1000000, factor = 0.75 },
+]
+
+[[factors]]
+input = "claims_count_5yr"
+bands = [
+  { from = 0, factor = 0.95 },
+  { from = 1, factor = 1.00 },
+  { from = 2, factor = 1.10 },
+  { from = 3, factor = 1.25 },
+  { from = 5, factor = 1.50 },
+]
+
+# ---- Sense check: shown against the premium, never changes it ----
+
+[sense_check]
+value_input = "agreed_hull_value"
