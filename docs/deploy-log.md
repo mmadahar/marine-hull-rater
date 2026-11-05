@@ -30,7 +30,7 @@ Commands actually run, in order, on 2026-11-05 (GMT). Placeholders: `<subscripti
 |---|---|
 | `az ad app create --display-name github-marine-hull-rater` | App registration, no client secret |
 | `az ad sp create --id <app-id>` | Its service principal |
-| `az ad app federated-credential create --id <app-id> --parameters fc.json` | Issuer `https://token.actions.githubusercontent.com`, subject `repo:mmadahar/marine-hull-rater:ref:refs/heads/main`, audience `api://AzureADTokenExchange` |
+| `az ad app federated-credential create --id <app-id> --parameters fc.json` | Issuer `https://token.actions.githubusercontent.com`, subject first set to `repo:mmadahar/marine-hull-rater:ref:refs/heads/main` (later corrected, see Errors), audience `api://AzureADTokenExchange` |
 | `az role assignment create --assignee-object-id <sp-object-id> --assignee-principal-type ServicePrincipal --role "Container Apps Contributor" --scope <resource-group-id>` | Update the app |
 | same, `--role AcrPush --scope <registry-resource-id>` | Push images |
 | same, `--role Reader --scope <registry-resource-id>` | `az acr login` has to read the registry resource |
@@ -58,6 +58,7 @@ Commands actually run, in order, on 2026-11-05 (GMT). Placeholders: `<subscripti
 |---|---|---|
 | `az provider register ... --wait` ran past the 3-minute shell limit | Registration is slow | Left it running in the background |
 | Cost Management query: `429 Too many requests` | Throttled just after registration | Retried once, see next row |
-| Cost Management query retry: `NotFound ... doesn't have valid WebDirect/AIRS offer type` | Not available on this new subscription yet | Took the currency from the billing profile instead |
+| Cost Management query retry: `NotFound ... doesn't have valid WebDirect/AIRS offer type` | Not available on this new subscription yet | `az billing account list` then `az billing profile list --account-name <billing-account>`: currency GBP, so the budget of 20 is £20 |
 | `az consumption budget list` (preview): `429`; later usageDetails: `400 Billing Period is not supported` | Throttling; API needs date filters on this offer | Listed budgets through `az rest` instead: none existed |
+| First workflow run, `azure/login`: `AADSTS700213: No matching federated identity record` for subject `repo:mmadahar@<owner-github-id>/marine-hull-rater@<repo-github-id>:ref:refs/heads/main` | GitHub now issues subjects containing the numeric owner and repo IDs, so the `repo:owner/name:...` form didn't match | `az ad app federated-credential update --id <app-id> --federated-credential-id github-main-push --parameters '{...subject as presented...}'`, then `gh run rerun <run-id> --failed`, which succeeded. Read the exact subject from the failed login log |
 | `az extension add --name containerapp --upgrade`: `Pip failed with status code 1` | Upgrade of the installed extension failed locally | Not blocking: the installed version worked. CI installs its own |
