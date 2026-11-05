@@ -62,3 +62,16 @@ Commands actually run, in order, on 2026-11-05 (GMT). Placeholders: `<subscripti
 | `az consumption budget list` (preview): `429`; later usageDetails: `400 Billing Period is not supported` | Throttling; API needs date filters on this offer | Listed budgets through `az rest` instead: none existed |
 | First workflow run, `azure/login`: `AADSTS700213: No matching federated identity record` for subject `repo:mmadahar@<owner-github-id>/marine-hull-rater@<repo-github-id>:ref:refs/heads/main` | GitHub now issues subjects containing the numeric owner and repo IDs, so the `repo:owner/name:...` form didn't match | `az ad app federated-credential update --id <app-id> --federated-credential-id github-main-push --parameters '{...subject as presented...}'`, then `gh run rerun <run-id> --failed`, which succeeded. Read the exact subject from the failed login log |
 | `az extension add --name containerapp --upgrade`: `Pip failed with status code 1` | Upgrade of the installed extension failed locally | Not blocking: the installed version worked. CI installs its own |
+| First live quote after a successful run returned the previous commit | `az containerapp update` returns before traffic moves to the new revision; the workflow's health check passed against the old one. Traffic had moved a minute later | Workflow now waits for `latestReadyRevisionName` to equal `latestRevisionName` before checking `/health` |
+| `az monitor log-analytics query`: `Pip failed with status code 1` | The CLI couldn't install its preview extension | Queried with `az rest --method post --url https://api.loganalytics.io/v1/workspaces/<workspace-id>/query --resource https://api.loganalytics.io --body '{"query":"..."}'` |
+
+## 6. Live checks
+
+| Command | Purpose |
+|---|---|
+| `curl -X POST https://<app-fqdn>/quote -H 'content-type: application/json' -d @q.json`, plus `GET /` and `GET /health` | Fixed quote, page and health |
+| 31 quotes with `X-Forwarded-For: 198.51.100.$i` | One varying fake value: 30 × 200 then 429 |
+| 31 quotes with `X-Forwarded-For: 10.0.0.$i, 198.51.100.$i` | Varying fake list: 30 × 200 then 429 |
+| 31 quotes with two `X-Forwarded-For` header lines, both varying | Same, as separate lines |
+| Repeated local quotes for over 2 minutes, while a temporary `rate-limit-probe` branch (holding only `probe.yml`, so no deploy) ran 31 quotes from a GitHub runner; then `git push origin --delete rate-limit-probe` | The runner got 30 × 200 then 429 while the local address was getting 429s: separate limits for separate addresses. `app/rate_limit.py` needed no change |
+| `az containerapp logs show -g rg-marine-hull-rater -n marine-hull-rater --tail 200 --format text`, grep the quote ID | Quote log line |

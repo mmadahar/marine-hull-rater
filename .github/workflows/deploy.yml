@@ -49,11 +49,15 @@ jobs:
         run: |
           az extension add --name containerapp --upgrade --only-show-errors
           az containerapp update --name "$APP_NAME" --resource-group "$RESOURCE_GROUP" --image "$IMAGE" --only-show-errors --output none
-      - name: Check the deployed commit is healthy
+      - name: Check the new revision is ready and healthy
         run: |
-          fqdn=$(az containerapp show --name "$APP_NAME" --resource-group "$RESOURCE_GROUP" --query properties.configuration.ingress.fqdn --output tsv)
+          # Only look once the new revision serves traffic, or the check could pass against the old one.
           for attempt in $(seq 1 30); do
-            curl --fail --silent --max-time 30 "https://$fqdn/health" && exit 0
+            read -r latest ready fqdn < <(az containerapp show --name "$APP_NAME" --resource-group "$RESOURCE_GROUP" \
+              --query "[properties.latestRevisionName, properties.latestReadyRevisionName, properties.configuration.ingress.fqdn]" --output tsv | tr '\n' ' ')
+            if [ "$latest" = "$ready" ] && curl --fail --silent --max-time 30 "https://$fqdn/health"; then
+              exit 0
+            fi
             sleep 10
           done
           exit 1
