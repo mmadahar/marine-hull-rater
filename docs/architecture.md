@@ -36,7 +36,7 @@ Everything runs in UK South. The resource group is `rg-marine-hull-rater`. The a
 | Container Apps environment | `cae-marine-hull-rater` | Consumption plan |
 | Container registry | `<registry>` | Basic tier, admin user off |
 | Managed identity | `id-marine-hull-rater` | `AcrPull` on the registry. The app pulls images with this |
-| Log Analytics workspace | `log-marine-hull-rater` | Pay per GB, 30-day retention, no daily cap |
+| Log Analytics workspace | `log-marine-hull-rater` | Pay per GB, 30-day retention, 0.2 GB daily cap |
 | App registration | `github-marine-hull-rater` | Federated credential for GitHub Actions, no client secret or certificate |
 | Budget | `budget-monthly-20` | £20 a month, on the subscription |
 
@@ -252,14 +252,14 @@ Together with the logged inputs, they show which rates and code produced a quote
 - **Compute:** 0.25 CPU and 0.5 GiB, one replica at most, and zero when idle.
 - **Budget:** £20 a month, with alerts at 50%, 80% and 100% of actual spend and 100% of forecast. It only sends alerts. It does not stop spending.
 - **Rate limit:** 30 quotes a minute per client address, which also limits log volume from any one address.
-- **Logs:** 30-day retention, but no daily cap.
+- **Logs:** 30-day retention and a 0.2 GB daily cap.
 - **Registry:** Basic tier has a fixed charge whether or not the app is running.
 
 ## Known limits
 
 - **The rate limiter is in memory.** Its counts reset on every deployment and whenever the app scales to zero. It also would not work across several replicas without change.
-- **Cold start takes about 21 seconds.** That was measured once, at 21.2 seconds, against 0.08 seconds when warm. The app reached zero replicas about 6 minutes after the last request.
-- **Logs have no daily cap.** A burst of traffic from many addresses could raise the bill, and the budget would only alert.
+- **Cold start takes about 21 seconds.** That was measured once, at 21.2 seconds, against 0.08 seconds when warm. The app reached zero replicas about 6 minutes after the last request. It stays scale-to-zero, and the page tells visitors the first quote may take about 20 seconds.
+- **Logs have a 0.2 GB daily cap.** If it is hit, new log lines, including audit lines, are dropped until the daily reset. Those quotes still succeed, but their audit lines are lost.
 - **The audit trail is not a permanent record.** Log lines are kept for 30 days, and took up to about 3 minutes to reach Log Analytics when checked.
 - **Old images are not cleaned up.** The registry's retention policy is off, and a new image is added on every deployment.
 - **No logins or database.** The API is public. The README lists logins, a database, approval workflows and version comparison as next steps.
