@@ -81,3 +81,9 @@ Commands actually run, in order, on 2026-11-05 (GMT). Placeholders: `<subscripti
 | `git revert`, pushed | Gate test revert: deployed, live commit moved to the revert, `/health` OK |
 | `az containerapp replica list -g rg-marine-hull-rater -n marine-hull-rater --revision <revision>`, every 30 seconds | Reached 0 replicas (`ScaledToZero`) about 6 minutes after the last request |
 | `curl -w '%{time_total}' https://<app-fqdn>/health` | Cold start 21.2 seconds, warm 0.08 seconds |
+
+## 7. Daily log cap
+
+| Command | Purpose |
+|---|---|
+| `az monitor log-analytics workspace update -g rg-marine-hull-rater -n log-marine-hull-rater --quota 0.2` | Caps log ingestion at 0.2 GB a day, so heavy traffic can't run up log charges. If the cap is hit, new log lines, including audit lines, are dropped until the daily reset. |
