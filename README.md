@@ -4,6 +4,8 @@ A small FastAPI service and web page that prices a marine hull risk from a rates
 
 **All rates in this project are made up. They are illustrative, are not based on any real pricing, and must not be used to price real risks.**
 
+See [the architecture document](docs/architecture.md) for how it is built and why.
+
 ## Run it locally
 
 Needs [uv](https://docs.astral.sh/uv/) and Python 3.14.
