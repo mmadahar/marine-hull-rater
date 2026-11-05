@@ -1245,7 +1245,7 @@ rm -rf "$HOME/mhr-scratch"
 | Contents of `fc.json`, `budget.json` and `q.json` | Rebuilt from the log's fields, the live settings and the fixed test quotes |
 | Full forms of commands shortened with `...` | Written out. For example, the workspace lookups and the federated credential's update JSON |
 | The later commit `c86e225`, which added the refer-to-underwriter flag | Covered from the repo. `[Ran]` Its workflow run succeeded |
-| The final push, and the checks after the last log entry | Not recorded. Read-only checks show `main` matches the remote and the runs above passed. No live request was made while this guide was checked |
+| The final push, and the checks after the last log entry | Not recorded. Read-only checks show the runs above passed. No live request was made while this guide was checked |
 | Test count | The log's 90 is an earlier baseline. The current count is 93 |
 | The later commit `d1d2f44`, which added the wake-up notice to the page | Covered from the repo. The log's section 7 records the cap, and `[Ran]` the live image tag is this commit |
 | The way "live commit" was read during the gate test | Not recorded. The guide uses the image tag, which was run, and the `git_commit` in a quote |
