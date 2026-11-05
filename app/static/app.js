@@ -169,6 +169,7 @@ function showResult(quote) {
   });
   document.getElementById("factor-rows").replaceChildren(...rows);
 
+  document.getElementById("refer-flag").hidden = !quote.refer_to_underwriter;
   setText("base-premium", money(quote.base_premium));
   setText("rate-tonne", `${money(quote.rate_per_gross_tonne)} per ${quote.exposure_unit}`);
   setText("rate-value", `${quote.rate_on_hull_value_pct}%`);

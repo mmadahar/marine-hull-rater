@@ -28,3 +28,4 @@ class QuoteResult:
     exposure_unit: str
     rate_per_exposure_unit: Decimal  # premium / exposure, 2 decimal places
     rate_on_value_pct: Decimal  # premium / value * 100, 3 decimal places
+    refer_to_underwriter: bool  # rate on value is above the rates file's limit

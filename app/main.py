@@ -70,6 +70,7 @@ def _outputs(result: QuoteResult) -> dict:
         "exposure_unit": result.exposure_unit,
         "rate_per_gross_tonne": str(result.rate_per_exposure_unit),
         "rate_on_hull_value_pct": str(result.rate_on_value_pct),
+        "refer_to_underwriter": result.refer_to_underwriter,
     }
 
 

@@ -149,3 +149,17 @@ def test_rater_code_contains_no_marine_terms():
         text = path.read_text().lower()
         for term in ("marine", "vessel", "hull", "tonn", "iacs", "flag", "deductible", "claims"):
             assert term not in text, f"{path}: {term}"
+
+
+def test_refer_flag_shows_above_the_limit_and_leaves_the_premium_alone():
+    normal = quote(SAMPLE, RATES)
+    low_value = quote({**SAMPLE, "agreed_hull_value": 2_000_000}, RATES)
+    assert not normal.refer_to_underwriter
+    assert low_value.refer_to_underwriter
+    assert low_value.technical_premium == normal.technical_premium
+
+
+def test_refer_flag_needs_the_rate_to_be_strictly_above_the_limit():
+    rate = quote(SAMPLE, RATES).rate_on_value_pct
+    at_limit = {**RATES, "sense_check": {**RATES["sense_check"], "refer_above_pct": rate}}
+    assert not quote(SAMPLE, at_limit).refer_to_underwriter

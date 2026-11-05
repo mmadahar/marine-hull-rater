@@ -114,6 +114,10 @@ section:focus {
   border-left: 6px solid var(--accent);
 }
 
+.refer {
+  margin-top: 1.5rem;
+}
+
 .status {
   margin: 0 0 1rem;
 }

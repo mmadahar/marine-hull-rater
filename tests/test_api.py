@@ -233,3 +233,9 @@ def test_static_files_are_served_when_present(tmp_path):
 def test_missing_static_folder_is_not_an_error(tmp_path):
     client = TestClient(create_app(static_dir=tmp_path / "absent"))
     assert client.get("/").status_code == 404
+
+
+def test_quote_reports_the_refer_flag(client):
+    assert client.post("/quote", json=VALID).json()["refer_to_underwriter"] is False
+    flagged = client.post("/quote", json={**VALID, "agreed_hull_value": 2_000_000})
+    assert flagged.json()["refer_to_underwriter"] is True

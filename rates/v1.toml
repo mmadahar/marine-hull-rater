@@ -121,3 +121,4 @@ bands = [
 
 [sense_check]
 value_input = "agreed_hull_value"
+refer_above_pct = 2.5 # above this rate on value, flag for an underwriter

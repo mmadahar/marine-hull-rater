@@ -50,6 +50,8 @@ def quote(inputs: Mapping, rates: dict) -> QuoteResult:
 
     # 3. Sense-check rates, from the rounded premium. The value is only divided into it.
     value_at_risk = clean[rates["sense_check"]["value_input"]]
+    rate_on_value = (previous / value_at_risk * 100).quantize(THREE_PLACES, ROUND_HALF_UP)
+    refer_above = rates["sense_check"].get("refer_above_pct")
     return QuoteResult(
         model_version=rates["model"]["version"],
         currency=rates["model"]["currency"],
@@ -58,9 +60,8 @@ def quote(inputs: Mapping, rates: dict) -> QuoteResult:
         technical_premium=previous,
         exposure_unit=base["exposure_unit"],
         rate_per_exposure_unit=_money(previous / exposure),
-        rate_on_value_pct=(previous / value_at_risk * 100).quantize(
-            THREE_PLACES, ROUND_HALF_UP
-        ),
+        rate_on_value_pct=rate_on_value,
+        refer_to_underwriter=refer_above is not None and rate_on_value > refer_above,
     )
 
 
