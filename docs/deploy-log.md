@@ -76,3 +76,8 @@ Commands actually run, in order, on 2026-11-05 (GMT). Placeholders: `<subscripti
 | 31 quotes with two `X-Forwarded-For` header lines, both varying | Same, as separate lines |
 | Repeated local quotes for over 2 minutes, while a temporary `rate-limit-probe` branch (holding only `probe.yml`, so no deploy) ran 31 quotes from a GitHub runner; then `git push origin --delete rate-limit-probe` | The runner got 30 × 200 then 429 while the local address was getting 429s: separate limits for separate addresses. `app/rate_limit.py` needed no change |
 | `az containerapp logs show -g rg-marine-hull-rater -n marine-hull-rater --tail 200 --format text`, grep the quote ID | Quote log line |
+| `az rest --method post --url https://api.loganalytics.io/v1/workspaces/<workspace-id>/query --resource https://api.loganalytics.io --body '{"query":"ContainerAppConsoleLogs_CL \| where Log_s has '<quote-id>'"}'` | Same line in Log Analytics, about 3 minutes later at most |
+| Added `tests/test_gate.py` with `assert False`, committed, pushed; `gh run view <run-id>` | Gate test: `test` failed, `deploy` skipped, live commit unchanged |
+| `git revert`, pushed | Gate test revert: deployed, live commit moved to the revert, `/health` OK |
+| `az containerapp replica list -g rg-marine-hull-rater -n marine-hull-rater --revision <revision>`, every 30 seconds | Reached 0 replicas (`ScaledToZero`) about 6 minutes after the last request |
+| `curl -w '%{time_total}' https://<app-fqdn>/health` | Cold start 21.2 seconds, warm 0.08 seconds |
