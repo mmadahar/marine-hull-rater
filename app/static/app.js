@@ -101,7 +101,7 @@ function clearErrors() {
 function withFieldLabels(message) {
   let text = message;
   for (const [name, definition] of Object.entries(inputs)) {
-    text = text.replaceAll(name, definition.label.toLowerCase());
+    text = text.replaceAll(name, definition.label);
   }
   return text;
 }
