@@ -124,7 +124,7 @@ The gate is the whole test suite. It includes ten fixed quotes in `tests/fixed_q
 
 The check after deployment calls `/health`. It does not run a test quote on the live service.
 
-The repo has no branch protection rule, because the current GitHub plan does not offer it for a private repo. The gate therefore blocks deployment, not the push to `main`.
+Branch protection on `main` blocks force pushes and deletion, but doesn't require checks before a push. The gate therefore blocks deployment, not the push to `main`.
 
 ## OIDC login from GitHub Actions to Azure
 

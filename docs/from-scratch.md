@@ -174,7 +174,7 @@ cd marine-hull-rater
 
 - **What:** downloads the repo and its full history.
 - **Success:** a new folder containing `pyproject.toml`.
-- **Errors (possible):** `Could not resolve to a Repository` means it does not exist or your account cannot see it. The repo is private.
+- **Errors (possible):** `Could not resolve to a Repository` means it does not exist or your account cannot see it.
 
 If the repo is gone, you need your own copy of the code. This is why [teardown](#12-teardown) tells you to keep one first.
 
@@ -880,7 +880,7 @@ The second one matters when reading run history. Commit `c51dedf` shows `test` s
 
 - `needs: test` means failed tests skip the whole `deploy` job. No image is built and the app isn't touched.
 - The fixed quotes are tests, so a change that moves a price from its expected value blocks the release too.
-- The gate guards **deployment**, not the branch. A failing commit still lands on `main` and needs fixing or reverting. `[Ran]` GitHub's branch protection API returned an upgrade message for this private repo on its current plan, so nothing stops a push at the door.
+- The gate guards **deployment**, not the branch. A failing commit still lands on `main` and needs fixing or reverting. Branch protection on `main` blocks force pushes and deletion, but doesn't require checks before a push.
 
 ## 8. Viewing logs and finding a quote by ID
 
@@ -1136,11 +1136,7 @@ Two variations try to fool it in other ways, using the same loop with different 
 
 The log also needed to show that one client's limit doesn't block another. It kept sending quotes from the laptop for over 2 minutes, while a GitHub runner sent 31 of its own from a different address. The runner got 30 × 200 and then 429, while the laptop was getting 429s.
 
-`[Log]` The workflow lived on a temporary branch holding only `probe.yml`. It didn't deploy, because the branch isn't `main`. Its full text is at commit `a1fdae0`. `[Ran]`
-
-```sh
-gh api "repos/mmadahar/marine-hull-rater/contents/.github/workflows/probe.yml?ref=a1fdae0" --jq .content | base64 -d
-```
+`[Log]` The workflow lived on a temporary branch holding only `probe.yml`. It didn't deploy, because the branch isn't `main`.
 
 Afterwards, the branch was removed:
 
