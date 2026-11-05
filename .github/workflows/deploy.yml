@@ -53,8 +53,11 @@ jobs:
         run: |
           # Only look once the new revision serves traffic, or the check could pass against the old one.
           for attempt in $(seq 1 30); do
-            read -r latest ready fqdn < <(az containerapp show --name "$APP_NAME" --resource-group "$RESOURCE_GROUP" \
-              --query "[properties.latestRevisionName, properties.latestReadyRevisionName, properties.configuration.ingress.fqdn]" --output tsv | tr '\n' ' ')
+            state=$(az containerapp show --name "$APP_NAME" --resource-group "$RESOURCE_GROUP" \
+              --query "[properties.latestRevisionName, properties.latestReadyRevisionName, properties.configuration.ingress.fqdn]" --output tsv)
+            latest=$(sed -n 1p <<< "$state")
+            ready=$(sed -n 2p <<< "$state")
+            fqdn=$(sed -n 3p <<< "$state")
             if [ "$latest" = "$ready" ] && curl --fail --silent --max-time 30 "https://$fqdn/health"; then
               exit 0
             fi

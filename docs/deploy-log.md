@@ -64,6 +64,7 @@ Commands actually run, in order, on 2026-11-05 (GMT). Placeholders: `<subscripti
 | `az extension add --name containerapp --upgrade`: `Pip failed with status code 1` | Upgrade of the installed extension failed locally | Not blocking: the installed version worked. CI installs its own |
 | First live quote after a successful run returned the previous commit | `az containerapp update` returns before traffic moves to the new revision; the workflow's health check passed against the old one. Traffic had moved a minute later | Workflow now waits for `latestReadyRevisionName` to equal `latestRevisionName` before checking `/health` |
 | `az monitor log-analytics query`: `Pip failed with status code 1` | The CLI couldn't install its preview extension | Queried with `az rest --method post --url https://api.loganalytics.io/v1/workspaces/<workspace-id>/query --resource https://api.loganalytics.io --body '{"query":"..."}'` |
+| Health-check step failed with exit code 1 although the app was deployed and healthy | `read` returns non-zero with no trailing newline, and the step runs with `bash -e` | Read the values with `sed -n` from a variable instead |
 
 ## 6. Live checks
 
