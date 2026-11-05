@@ -6,6 +6,8 @@ A small FastAPI service and web page that prices a marine hull risk from a rates
 
 See [the architecture document](docs/architecture.md) for how it is built and why.
 
+See [the from-scratch guide](docs/from-scratch.md) to build, deploy and tear it down yourself.
+
 ## Run it locally
 
 Needs [uv](https://docs.astral.sh/uv/) and Python 3.14.
