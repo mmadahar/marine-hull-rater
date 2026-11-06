@@ -86,11 +86,25 @@ a {
   padding: 1rem 16px;
 }
 
-.site-header h1 {
+.site-header-inner {
   max-width: calc(60rem - 32px);
   margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.25rem 1rem;
+}
+
+.site-header h1 {
+  margin: 0;
   color: var(--on-primary);
   font-size: 2.25rem;
+}
+
+.site-header .repo-link {
+  color: var(--on-primary);
+  font-weight: 600;
 }
 
 main {
